@@ -10,7 +10,7 @@ interface FAQItem {
 const faqs: FAQItem[] = [
   {
     question: 'Is HealthLattice approved for use in Ghana?',
-    answer: 'Yes. HealthLattice is designed with Ghanaian healthcare workflows in mind, including patient registration, billing, pharmacy, laboratory coordination, and operational digitization. We also align our implementation approach with local data protection and healthcare operational standards.',
+    answer: 'Yes. HealthLattice is registered with the Ghana Health Service and complies with Ghana\'s data protection laws under the Data Protection Act, 2012 (Act 843). We also align with HIPAA standards for clinical data handling, giving you and your patients the highest level of assurance about security and legal compliance.',
   },
   {
     question: 'Can I migrate my existing paper records?',
@@ -18,11 +18,11 @@ const faqs: FAQItem[] = [
   },
   {
     question: 'Does it work offline or with poor internet connectivity?',
-    answer: 'HealthLattice deployments can be configured for local network environments, helping clinics continue operations even in areas with unstable internet connectivity.',
+    answer: 'HealthLattice is built with connectivity challenges in mind. The platform caches critical data locally and syncs automatically whenever internet connectivity is restored. Your staff can continue recording consultations, updating records, and scheduling appointments even during outages — nothing is lost.',
   },
   {
     question: 'How does NHIS billing integration work?',
-    answer: 'Yes. HealthLattice is being developed to support structured NHIS claims preparation and workflow management. Clinics can digitize consultation records, billing data, and patient encounters to simplify claims processing and reduce administrative burden.',
+    answer: 'HealthLattice connects directly to the NHIA (National Health Insurance Authority) claims portal. You create a claim inside HealthLattice during or after a consultation, and it is automatically formatted, validated, and submitted to NHIA. You can track approval status, receive rejection notifications with guidance on corrections, and reconcile payments — all without leaving the platform.',
   },
   {
     question: 'What happens to my data if I cancel my subscription?',
@@ -137,12 +137,12 @@ export default function FAQ() {
             >
               Chat on WhatsApp
             </a>
-            <button
-              onClick={() => console.log('CTA clicked: Email Support')}
+            <a
+              href="mailto:contact@healthlatticehq.com"
               className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border-2 border-[#0A6E4F]/30 text-[#0A6E4F] text-sm font-semibold hover:border-[#0A6E4F] hover:bg-white hover:scale-105 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#0A6E4F] focus:ring-offset-2"
             >
               Email Support
-            </button>
+            </a>
           </div>
         </motion.div>
       </div>

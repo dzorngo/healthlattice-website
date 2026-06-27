@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, CheckCircle } from 'lucide-react';
+import { X, CheckCircle, Phone, MessageCircle } from 'lucide-react';
+import { useForm, ValidationError } from '@formspree/react';
 
 interface DemoModalProps {
   isOpen: boolean;
@@ -16,22 +17,25 @@ interface FormData {
 
 export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
   const [form, setForm] = useState<FormData>({ name: '', email: '', phone: '', clinicName: '' });
-  const [submitted, setSubmitted] = useState(false);
+  const [formspreeState, handleFormspreeSubmit] = useForm('xjgqvoyq');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('CTA clicked: Request Demo', form);
-    setSubmitted(true);
+    await handleFormspreeSubmit(e);
   };
 
   const handleClose = () => {
     onClose();
-    setTimeout(() => setSubmitted(false), 400);
+    setTimeout(() => {
+      setForm({ name: '', email: '', phone: '', clinicName: '' });
+    }, 400);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+
+  const submitted = formspreeState.succeeded;
 
   return (
     <AnimatePresence>
@@ -122,15 +126,28 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
                               onChange={handleChange}
                               className="w-full px-4 py-3 rounded-xl border border-[#0A6E4F]/20 bg-[#F0F7F4] text-[#0F1C17] placeholder-[#4A5E55]/50 text-sm focus:outline-none focus:ring-2 focus:ring-[#0A6E4F] focus:border-[#0A6E4F] transition-all duration-200"
                             />
+                            <ValidationError
+                              prefix={field.label}
+                              field={field.name}
+                              errors={formspreeState.errors}
+                              className="text-xs text-red-600 mt-1"
+                            />
                           </div>
                         ))}
 
                         <button
                           type="submit"
-                          className="w-full py-4 rounded-full bg-[#12A274] text-white text-base font-semibold hover:bg-[#0A6E4F] hover:scale-[1.02] hover:shadow-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#0A6E4F] focus:ring-offset-2 mt-2"
+                          disabled={formspreeState.submitting}
+                          className="w-full py-4 rounded-full bg-[#12A274] text-white text-base font-semibold hover:bg-[#0A6E4F] hover:scale-[1.02] hover:shadow-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#0A6E4F] focus:ring-offset-2 mt-2 disabled:opacity-60 disabled:cursor-not-allowed"
                         >
-                          Request Demo →
+                          {formspreeState.submitting ? 'Sending...' : 'Request Demo →'}
                         </button>
+
+                        {formspreeState.errors && (
+                          <p className="text-xs text-red-600 text-center">
+                            Something went wrong. Please try again.
+                          </p>
+                        )}
 
                         <p className="text-xs text-[#4A5E55] text-center">
                           No commitment. We&apos;ll confirm within 24 hours. 🇬🇭
@@ -143,7 +160,7 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                      className="text-center py-8"
+                      className="text-center py-6"
                     >
                       <div className="w-16 h-16 rounded-full bg-[#F0F7F4] flex items-center justify-center mx-auto mb-5">
                         <CheckCircle size={32} className="text-[#0A6E4F]" />
@@ -159,6 +176,31 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
                         reach out to <strong className="text-[#0F1C17]">{form.email}</strong> within 24 hours
                         to confirm your demo time.
                       </p>
+
+                      <div className="bg-[#F0F7F4] rounded-2xl p-5 mb-6 text-left">
+                        <p className="text-sm font-semibold text-[#054D37] mb-3" style={{ fontFamily: 'Fraunces, serif' }}>
+                          Need immediate assistance?
+                        </p>
+                        <div className="flex flex-col gap-2.5">
+                          <a
+                            href="tel:+233558497419"
+                            className="flex items-center gap-2.5 text-sm text-[#4A5E55] hover:text-[#0A6E4F] transition-colors"
+                          >
+                            <Phone size={16} className="text-[#0A6E4F]" />
+                            <span>055 849 7419</span>
+                          </a>
+                          <a
+                            href="https://wa.me/233552139347"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2.5 text-sm text-[#4A5E55] hover:text-[#0A6E4F] transition-colors"
+                          >
+                            <MessageCircle size={16} className="text-[#0A6E4F]" />
+                            <span>WhatsApp: 055 213 9347</span>
+                          </a>
+                        </div>
+                      </div>
+
                       <button
                         onClick={handleClose}
                         className="px-8 py-3 rounded-full bg-[#F0F7F4] text-[#0A6E4F] text-sm font-semibold hover:bg-[#0A6E4F] hover:text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#0A6E4F]"

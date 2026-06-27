@@ -1,40 +1,23 @@
-import { useState } from 'react';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import SocialProof from './components/SocialProof';
-import ProblemStatement from './components/ProblemStatement';
-import Features from './components/Features';
-import HowItWorks from './components/HowItWorks';
-import Testimonials from './components/Testimonials';
-import Pricing from './components/Pricing';
-import FAQ from './components/FAQ';
-import CTASection from './components/CTASection';
-import Footer from './components/Footer';
-import DemoModal from './components/DemoModal';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import LandingPage from './pages/LandingPage';
+import PatientRecordsPage from './pages/PatientRecordsPage';
+import AppointmentSchedulingPage from './pages/AppointmentSchedulingPage';
+import BillingPage from './pages/BillingPage';
+import AnalyticsPage from './pages/AnalyticsPage';
+import AboutPage from './pages/AboutPage';
 
 function App() {
-  const [demoOpen, setDemoOpen] = useState(false);
-
   return (
-    <div className="min-h-screen bg-white overflow-x-hidden">
-      <Navbar onBookDemo={() => setDemoOpen(true)} />
-
-      <main>
-        <Hero onBookDemo={() => setDemoOpen(true)} />
-        <SocialProof />
-        <ProblemStatement />
-        <Features />
-        <HowItWorks />
-        <Testimonials />
-        <Pricing />
-        <FAQ />
-        <CTASection onBookDemo={() => setDemoOpen(true)} />
-      </main>
-
-      <Footer />
-
-      <DemoModal isOpen={demoOpen} onClose={() => setDemoOpen(false)} />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/features/patient-records" element={<PatientRecordsPage />} />
+        <Route path="/features/appointment-scheduling" element={<AppointmentSchedulingPage />} />
+        <Route path="/features/billing" element={<BillingPage />} />
+        <Route path="/features/analytics" element={<AnalyticsPage />} />
+        <Route path="/about" element={<AboutPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

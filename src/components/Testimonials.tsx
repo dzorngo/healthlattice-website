@@ -49,7 +49,7 @@ function TestimonialCard({ testimonial, delay }: { testimonial: Testimonial; del
       viewport={{ once: true }}
       transition={{ duration: 0.6, delay }}
       whileHover={{ y: -6 }}
-      className="relative bg-white rounded-2xl p-7 card-shadow border border-transparent hover:border-[#0A6E4F]/20 hover:shadow-[0_8px_40px_rgba(10,110,79,0.14)] transition-all duration-300 flex flex-col"
+      className="relative bg-white rounded-2xl p-7 card-shadow border border-transparent hover:border-[#0A6E4F]/20 hover:shadow-[0_8px_40px_rgba(10,110,79,0.14)] transition-all duration-300 flex flex-col overflow-hidden"
     >
       {/* Quote icon */}
       <div className="w-10 h-10 rounded-xl bg-[#F0F7F4] flex items-center justify-center mb-5">
@@ -69,19 +69,21 @@ function TestimonialCard({ testimonial, delay }: { testimonial: Testimonial; del
       </blockquote>
 
       {/* Author */}
-      <div className="flex items-center gap-3 pt-5 border-t border-[#F0F7F4]">
-        <div
-          className="w-11 h-11 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0"
-          style={{ background: testimonial.avatarColor }}
-          aria-label={`Avatar for ${testimonial.name}`}
-        >
-          {testimonial.initials}
+      <div className="flex flex-col gap-2 pt-5 border-t border-[#F0F7F4]">
+        <div className="flex items-center gap-3">
+          <div
+            className="w-11 h-11 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0"
+            style={{ background: testimonial.avatarColor }}
+            aria-label={`Avatar for ${testimonial.name}`}
+          >
+            {testimonial.initials}
+          </div>
+          <div className="min-w-0">
+            <p className="text-sm font-semibold text-[#0F1C17]">{testimonial.name}</p>
+            <p className="text-xs text-[#4A5E55]">{testimonial.role}, {testimonial.clinic}</p>
+          </div>
         </div>
-        <div className="flex-1 min-w-0">
-          <p className="text-sm font-semibold text-[#0F1C17] truncate">{testimonial.name}</p>
-          <p className="text-xs text-[#4A5E55] truncate">{testimonial.role}, {testimonial.clinic}</p>
-        </div>
-        <div className="flex-shrink-0">
+        <div>
           <span className="inline-flex items-center gap-1 text-xs text-[#0A6E4F] bg-[#F0F7F4] px-2.5 py-1 rounded-full font-medium">
             <span>📍</span>
             {testimonial.location}

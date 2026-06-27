@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Star, ArrowRight, Play } from 'lucide-react';
+import VideoModal from './VideoModal';
 
 interface HeroProps {
   onBookDemo: () => void;
@@ -103,7 +105,9 @@ function PatientDashboardMockup() {
 }
 
 export default function Hero({ onBookDemo }: HeroProps) {
+  const [videoOpen, setVideoOpen] = useState(false);
   return (
+    <>
     <section
       id="hero"
       className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden mesh-gradient dot-pattern"
@@ -181,7 +185,7 @@ export default function Hero({ onBookDemo }: HeroProps) {
                 <ArrowRight size={18} />
               </button>
               <button
-                onClick={() => console.log('CTA clicked: Watch 2-Min Demo')}
+                onClick={() => setVideoOpen(true)}
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full border-2 border-[#0A6E4F]/30 text-[#0A6E4F] text-base font-semibold hover:border-[#0A6E4F] hover:bg-[#F0F7F4] hover:scale-105 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#0A6E4F] focus:ring-offset-2"
               >
                 <span className="flex items-center justify-center w-7 h-7 rounded-full bg-[#0A6E4F] text-white">
@@ -260,5 +264,7 @@ export default function Hero({ onBookDemo }: HeroProps) {
         </div>
       </div>
     </section>
+    <VideoModal isOpen={videoOpen} onClose={() => setVideoOpen(false)} />
+    </>
   );
 }

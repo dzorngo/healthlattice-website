@@ -1,4 +1,5 @@
 import { Linkedin, Twitter, Facebook, Mail, Phone, MapPin, MessageCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface FooterSection {
   title: string;
@@ -19,7 +20,7 @@ const sections: FooterSection[] = [
   {
     title: 'Company',
     links: [
-      { label: 'About Us', href: '#' },
+      { label: 'About HealthLattice', href: '/about' },
       { label: 'Careers', href: '#' },
       { label: 'Blog', href: '#' },
       { label: 'Press', href: '#' },
@@ -69,18 +70,20 @@ export default function Footer() {
             {/* Social Icons */}
             <div className="flex items-center gap-3">
               {[
-                { icon: <Linkedin size={16} />, label: 'LinkedIn' },
-                { icon: <Twitter size={16} />, label: 'Twitter' },
-                { icon: <Facebook size={16} />, label: 'Facebook' },
+                { icon: <Linkedin size={16} />, label: 'LinkedIn', href: '#' },
+                { icon: <Twitter size={16} />, label: 'Twitter', href: '#' },
+                { icon: <Facebook size={16} />, label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61590618502089' },
               ].map((social) => (
-                <button
+                <a
                   key={social.label}
-                  onClick={() => console.log(`Social: ${social.label}`)}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-9 h-9 rounded-full bg-[#1a2e27] flex items-center justify-center text-[#6b8a7e] hover:text-white hover:bg-[#0A6E4F] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#0A6E4F]"
                   aria-label={social.label}
                 >
                   {social.icon}
-                </button>
+                </a>
               ))}
             </div>
           </div>
@@ -96,12 +99,21 @@ export default function Footer() {
               <ul className="flex flex-col gap-3">
                 {section.links.map((link) => (
                   <li key={link.label}>
-                    <button
-                      onClick={() => handleScrollTo(link.href)}
-                      className="text-sm text-[#6b8a7e] hover:text-[#12A274] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#0A6E4F] rounded text-left"
-                    >
-                      {link.label}
-                    </button>
+                    {link.href.startsWith('/') ? (
+                      <Link
+                        to={link.href}
+                        className="text-sm text-[#6b8a7e] hover:text-[#12A274] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#0A6E4F] rounded"
+                      >
+                        {link.label}
+                      </Link>
+                    ) : (
+                      <button
+                        onClick={() => handleScrollTo(link.href)}
+                        className="text-sm text-[#6b8a7e] hover:text-[#12A274] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#0A6E4F] rounded text-left"
+                      >
+                        {link.label}
+                      </button>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -116,16 +128,16 @@ export default function Footer() {
             <ul className="flex flex-col gap-4">
               <li>
                 <a
-                  href="mailto:hello@healthlattice.com"
+                  href="mailto:contact@healthlatticehq.com"
                   className="flex items-start gap-3 text-sm text-[#6b8a7e] hover:text-[#12A274] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#0A6E4F] rounded"
                 >
                   <Mail size={15} className="mt-0.5 flex-shrink-0" />
-                  hello@healthlattice.com
+                  contact@healthlatticehq.com
                 </a>
               </li>
               <li>
                 <a
-                  href="tel:+233302000000"
+                  href="tel:+2330558497419"
                   className="flex items-start gap-3 text-sm text-[#6b8a7e] hover:text-[#12A274] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#0A6E4F] rounded"
                 >
                   <Phone size={15} className="mt-0.5 flex-shrink-0" />

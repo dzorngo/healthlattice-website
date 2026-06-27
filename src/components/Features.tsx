@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { FileText, Calendar, CreditCard, BarChart3, Search, Bell, CheckCircle } from 'lucide-react';
 
 function PatientRecordMockup() {
@@ -282,12 +283,28 @@ export default function Features() {
                   {feature.headline}
                 </h3>
                 <p className="text-base text-[#4A5E55] leading-relaxed mb-6">{feature.body}</p>
-                <button
-                  onClick={() => console.log(`CTA clicked: Learn more ${feature.badge}`)}
-                  className="inline-flex items-center gap-2 text-[#0A6E4F] font-semibold text-sm hover:text-[#054D37] hover:gap-3 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#0A6E4F] rounded px-1"
-                >
-                  Learn more →
-                </button>
+                {feature.id === 'records' ? (
+                  <Link
+                    to="/features/patient-records"
+                    className="inline-flex items-center gap-2 text-[#0A6E4F] font-semibold text-sm hover:text-[#054D37] hover:gap-3 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#0A6E4F] rounded px-1"
+                  >
+                    Learn more →
+                  </Link>
+                ) : feature.id === 'scheduling' ? (
+                  <Link
+                    to="/features/appointment-scheduling"
+                    className="inline-flex items-center gap-2 text-[#0A6E4F] font-semibold text-sm hover:text-[#054D37] hover:gap-3 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#0A6E4F] rounded px-1"
+                  >
+                    Learn more →
+                  </Link>
+                ) : (
+                  <Link
+                    to="/features/billing"
+                    className="inline-flex items-center gap-2 text-[#0A6E4F] font-semibold text-sm hover:text-[#054D37] hover:gap-3 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#0A6E4F] rounded px-1"
+                  >
+                    Learn more →
+                  </Link>
+                )}
               </div>
               <div className={`${feature.flip ? 'lg:order-1' : ''} w-full`}>
                 <motion.div
@@ -325,12 +342,12 @@ export default function Features() {
                 Real-time metrics on patient flow, revenue trends, and staff performance. Spot
                 bottlenecks before they become crises. Make confident decisions backed by your own data.
               </p>
-              <button
-                onClick={() => console.log('CTA clicked: Explore Analytics')}
+              <Link
+                to="/features/analytics"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#0A6E4F] text-white text-sm font-semibold hover:bg-[#054D37] hover:scale-105 hover:shadow-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#0A6E4F] focus:ring-offset-2"
               >
                 Explore Analytics
-              </button>
+              </Link>
             </div>
             <motion.div whileHover={{ y: -4 }} transition={{ duration: 0.25 }}>
               <AnalyticsMockup />

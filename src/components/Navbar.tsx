@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 interface NavLink {
   label: string;
@@ -11,7 +12,7 @@ const navLinks: NavLink[] = [
   { label: 'Features', href: '#features' },
   { label: 'Pricing', href: '#pricing' },
   { label: 'Case Studies', href: '#testimonials' },
-  { label: 'About', href: '#how-it-works' },
+  { label: 'About HealthLattice', href: '/about' },
   { label: 'Blog', href: '#faq' },
 ];
 
@@ -22,6 +23,9 @@ interface NavbarProps {
 export default function Navbar({ onBookDemo }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const isHome = location.pathname === '/';
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 80);
@@ -31,9 +35,25 @@ export default function Navbar({ onBookDemo }: NavbarProps) {
 
   const handleNavClick = (href: string) => {
     setMobileOpen(false);
+    if (!href.startsWith('#')) {
+      navigate(href);
+      return;
+    }
+    if (!isHome) {
+      navigate('/' + href);
+      return;
+    }
     const target = document.querySelector(href);
     if (target) {
       target.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleLogoClick = () => {
+    if (isHome) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      navigate('/');
     }
   };
 
@@ -49,7 +69,7 @@ export default function Navbar({ onBookDemo }: NavbarProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Logo */}
           <button
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            onClick={handleLogoClick}
             className="flex items-center gap-2.5 focus:outline-none focus:ring-2 focus:ring-[#0A6E4F] rounded-lg"
             aria-label="HealthLattice home"
           >
